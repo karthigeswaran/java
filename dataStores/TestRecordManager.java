@@ -3,8 +3,8 @@ package dataStores;
 import java.util.Scanner;
 import java.awt.Toolkit;
 
-public class DataStores{
-    RecordManager rm = new RecordManager();
+public class TestRecordManager{
+    RecordManager recordManager =  new RecordManager();
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Data Stores Inc.");
