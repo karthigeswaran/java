@@ -1,128 +1,51 @@
 package dataStores;
 
-import java.util.*;
-import java.io.*;
-import java.awt.*;
+import java.util.Scanner;
+import java.awt.Toolkit;
 
 public class DataStores{
-    private String filename = "Records";
-    private ArrayList<Record> records;
-    Scanner scan = new Scanner(System.in);
+    RecordManager rm = new RecordManager();
     public static void main(String[] args) {
-        DataStores dt = new DataStores();
+        Scanner scan = new Scanner(System.in);
         System.out.println("Data Stores Inc.");
-        dt.records = dt.readFile();
-        dt.viewMenu();
+        RecordManager.viewMenu();
         boolean flag = true;
         do{
             System.out.print("Enter option number: ");
-            int opt = dt.scan.nextInt();
+            int opt = scan.nextInt();
             switch(opt){
                 case 1:
-                    dt.createNewRecord();
-                    break;
+                    rm.openFile();
                 case 2:
-                    if(dt.deleteRecord()){
+                    rm.createNewRecord();
+                    break;
+                case 3:
+                    if(rm.deleteRecord()){
                         System.out.println("Successfully deleted");
                     }else{
                         System.out.println("Requested entry does not exist");
                     }
                     break;
-                case 3:
-                    dt.updateRecord();
-                    break;
                 case 4:
-                    dt.displayRecord();
+                    rm.updateRecord();
                     break;
                 case 5:
-                    dt.displayAllRecords();
+                    rm.displayRecord();
                     break;
                 case 6:
-                    flag = false;
+                    rm.displayAllRecords();
                     break;
                 case 7:
-                    dt.viewMenu();
+                    flag = false;
+                    rm.exit();
+                    break;
+                case 8:
+                    rm.viewMenu();
                     break;
                 default:
                     Toolkit.getDefaultToolkit().beep();
-                    System.out.println("Enter correct option!!");
             }   
         }while(flag);
-        dt.scan.close();
-        dt.writeFile();
-    }
-    void createNewRecord(){
-        Record rec = new Record(askKey(),askValue());
-        if(records.contains(rec)){
-            System.out.println("Unable to add key, value match to existing record");
-        }else{
-            records.add(rec);
-        }
-    }
-    boolean deleteRecord(){
-        String k = askKey();
-        for(Record record : records){
-            if(record.getKey().equals(k)){
-                records.remove(record);
-                return true;
-            }
-        }
-        return false;
-    }
-    String askKey(){
-        System.out.print("Enter key: ");
-        String key = scan.next();
-        return key;            
-    }
-    String askValue(){
-        System.out.print("Enter value: ");
-        String value = scan.next();
-        return value;            
-    }
-    void updateRecord(){
-        String k = askKey();
-        for(Record record : records){
-            if(record.getKey().equals(k)){
-                System.out.println(record);
-                System.out.println("Would you like to update(yes/no): ");
-                String c = scan.next();
-                if(c.equals("yes")){
-                    String v = askValue();
-                    record.setValue(v);
-                }else{
-                    System.out.println("Record not updated");
-                }
-            }
-        }
-    }
-    void displayRecord(){
-        String k = askKey();
-        for(Record record: records){
-            if(record.getKey().equals(k)){
-                System.out.println(record);
-            }
-        }
-    }
-    void displayAllRecords(){
-        for(Record record: records){
-            System.out.println(record);
-        }
-    }
-    void viewMenu(){
-        System.out.println("Menu:\n1.Create a new input.\n2.Delete a row of data.\n3.Update an existing row.\n"
-            +"4.Display a record.\n5.Display all record.\n6.Exit.\n7.View Menu.");
-    }
-    ArrayList<Record> readFile(){
-
-        return new ArrayList<Record>();
-    }
-    void writeFile(){
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter("records"));
-            bw.write(records.toString());
-            bw.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        scan.close();
     }
 }

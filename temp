@@ -1,0 +1,19 @@
+menu : 
+1. open file
+2. delete file
+3. display file
+
+open file: [exist-> access, not exist->create new file with given name]
+
+1. add record
+2. delete record
+3. update record
+4. get record
+
+
+DataStore dataStore = new DataStore("student");
+
+boolean isRecordCreated = dataStore.create(record);
+Record record = dataStore.get(id);
+dataStore.update(record);
+boolean isRecordDeleted = dataStore.delete(record); 
