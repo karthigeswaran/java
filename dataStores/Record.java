@@ -9,6 +9,11 @@ public class Record{
         value = v;
     }
 
+    public Record(String k){
+        key = k;
+        value = "";
+    }
+
     String getKey(){
         return key;
     }
