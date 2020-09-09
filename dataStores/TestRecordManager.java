@@ -12,16 +12,15 @@ public class TestRecordManager{
         System.out.println("DataStores.app");
         boolean flag = true;
         while(flag){
-            System.out.print("Menu\n1.Open a file.\n2.exit.\nEnter option: ");
+            System.out.print("Menu\n1.Open file.\n2.exit.\nEnter option: ");
             int opt = trm.scan.nextInt();
             switch(opt){
                 case 1:
-                    System.out.print("Enter File path: ");
-                    String filename = trm.scan.next();
+                    String filename = "C:\\Users\\karthigeswaran\\Desktop\\practise\\java\\dataStores\\Test";
                     trm.recordManager = new RecordManager(filename);
                     boolean f = true;
                     while(f){
-                        System.out.print("Menu\n1.create record.\n2.delete record.\n3.update record.\n4.exit.\nEnter option: ");
+                        System.out.print("Menu\n1.create record.\n2.delete record.\n3.update record.\n4.fetch Record.\n5.exit.\nEnter option: ");
                         int option = trm.scan.nextInt();
                         String key,value;
                         Record rec;
@@ -38,8 +37,7 @@ public class TestRecordManager{
                                 break;
                             case 2:
                                 key = trm.askKey();
-                                rec = new Record(key);
-                                if(trm.recordManager.deleteRecord(rec)){
+                                if(trm.recordManager.deleteRecord(key)){
                                     System.out.println("Delete successfull!!");
                                 }else{
                                     System.out.println("Unable to delete.");
@@ -56,6 +54,15 @@ public class TestRecordManager{
                                 }
                                 break;
                             case 4:
+                                key =trm.askKey();
+                                rec = trm.recordManager.fetchRecord(key);
+                                if(rec == null) {
+                                    System.out.println("No record found");
+                                    break;
+                                }
+                                System.out.println(rec.getValue());
+                                break;
+                            case 5:
                                 f = false;
                                 break;
                             default:

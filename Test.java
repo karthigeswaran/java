@@ -1,5 +1,8 @@
+import java.io.File;
+
 public class Test {
     public static void main(String[] args) {
-        java.awt.Toolkit.getDefaultToolkit().beep();       
+        System.out.println(new File("C:\\Users\\karthigeswaran\\Desktop\\practise\\java\\dataStores\\temp").isFile());    
+        
     }
 }

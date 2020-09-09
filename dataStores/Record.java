@@ -9,11 +9,6 @@ public class Record{
         value = v;
     }
 
-    public Record(String k){
-        key = k;
-        value = "";
-    }
-
     String getKey(){
         return key;
     }
@@ -24,6 +19,17 @@ public class Record{
 
     String getValue(){
         return value;
+    }
+
+    public String toString(){
+        return ""+this.key+": "+this.value;
+    }
+
+    public boolean equals(Record rec){
+        if(this.key.equals(rec.getKey())&&this.value.equals(rec.getValue())){
+            return true;
+        }
+        return false;
     }
 
 }
