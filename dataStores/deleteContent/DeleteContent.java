@@ -1,4 +1,4 @@
-package deleteContent;
+package dataStores.deleteContent;
 
 import java.io.*;
 
@@ -10,28 +10,38 @@ public class DeleteContent {
     }
 
     String run(){
-        return isValid();
-    }
-
-    String isValid(){
-        if(new File(filepath).isFile()){
-            return setup();
+        File newFile = new File(filepath+"temp");
+        if(!isValid()){
+            return "Invalid File Path";
         }
-        return "Invalid File Path";
+        RandomAccessFile newRAFile = setup(newFile);
+        if(!createValidCopy(newRAFile)){
+            return "Unable to create a valid Copy";
+        }
+        if(!renameFile(newFile)){
+            return "Unable to Rename to old File";
+        }
+        return "Delete Successfull";
     }
 
-    String setup(){
+    boolean isValid(){
+        if(new File(filepath).isFile()){
+            return true;
+        }
+        return false;
+    }
+
+    RandomAccessFile setup(File newFile){
         try{
-            File file = new File(filepath+"temp");
-            RandomAccessFile newFile = new RandomAccessFile(file, "rw");
-            return createValidCopy(newFile,file);
+            RandomAccessFile newRAFile = new RandomAccessFile(newFile, "rw");
+            return newRAFile;
         }catch(IOException e){
             e.printStackTrace();
         }
-        return "Unable to open given file.";
+        return null;
     }
 
-    String createValidCopy(RandomAccessFile newFile,File file){
+    boolean createValidCopy(RandomAccessFile newFile){
         try{
             RandomAccessFile oldFile = new RandomAccessFile(filepath,"rw");
             oldFile.seek(0);
@@ -48,19 +58,19 @@ public class DeleteContent {
             }
             oldFile.close();
             newFile.close();
-            return renameFile(file);
+            return true;
         }catch(IOException e){
             e.printStackTrace();
         }
-        return "unable to create a valid file";
+        return false;
     }
 
-    String renameFile(File newFile){
+    boolean renameFile(File newFile){
         File oldFile = new File(filepath);
         oldFile.delete();
         if(newFile.renameTo(new File(filepath))){
-            return "Delete Sucessfull";
+            return true;
         }
-        return "Unable to rename";
+        return false;
     }
 }

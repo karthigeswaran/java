@@ -1,4 +1,4 @@
-package deleteContent;
+package dataStores.deleteContent;
 
 public class TestDeleteContent {
     public static void main(String[] args) {
